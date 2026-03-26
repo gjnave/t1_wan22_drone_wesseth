@@ -1,12 +1,9 @@
-# - CheckpointLoaderSimple
-# - WanVaceToVideo
-# - ModelSamplingSD3# clean base image containing only comfyui, comfy-cli and comfyui-manager
+# clean base image containing only comfyui, comfy-cli and comfyui-manager
 FROM runpod/worker-comfyui:5.5.1-base
 
 # install required custom nodes
 RUN comfy-node-install rgthree-comfy
 RUN comfy-node-install comfyui-videohelpersuite
-RUN comfy-node-install comfyui-wanvideo
 
 # install ffmpeg for post-processing (face edits, video manipulation, etc.)
 RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
@@ -22,9 +19,3 @@ RUN comfy model download \
  --url https://huggingface.co/UnifiedHorusRA/DroneShot-Wan2.2_2.1-I2V-A14B/resolve/main/wan22-video8-drone-16-sel-2.safetensors \
  --relative-path models/loras \
  --filename wan22-video8-drone-16-sel-2.safetensors
-
-# optional: copy any input assets if needed
-# COPY input/ /comfyui/input/
-# - VHS_VideoCombine
-# - PrimitiveInt
-# - Lora Loader Stack (rgthree)
